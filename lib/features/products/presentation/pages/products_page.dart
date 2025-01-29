@@ -121,9 +121,7 @@ class _ProductsPageState extends State<ProductsPage> {
             onNegativeButton: () => Navigator.of(context).pop(),
             positiveText: "Eliminar",
             onPositiveButton: () {
-              if (product.id != null) {
-                context.read<ProductsCubit>().deleteProduct(product.id!);
-              }
+              context.read<ProductsCubit>().deleteProduct(product.id!);
               Navigator.of(context).pop();
             },
           ).show(context),
