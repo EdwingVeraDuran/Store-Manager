@@ -9,7 +9,7 @@ class SupabaseProductsRepo implements ProductsRepo {
   Future<Product?> createProduct(Product product) async {
     try {
       final clientResponse =
-          await productsTable.insert(product.toMap()).select("*");
+          await productsTable.insert(product.toMap()).select();
       final productResponse = Product.fromMap(clientResponse.first);
       return productResponse;
     } catch (e) {
