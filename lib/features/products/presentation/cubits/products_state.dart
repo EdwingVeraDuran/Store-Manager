@@ -21,11 +21,6 @@ class ProductDeleted extends ProductsState {
   ProductDeleted(this.product);
 }
 
-class ProductsDeleted extends ProductsState {
-  final List<Product> products;
-  ProductsDeleted(this.products);
-}
-
 class ProductsList extends ProductsState {
   final List<Product> products;
   ProductsList(this.products);
