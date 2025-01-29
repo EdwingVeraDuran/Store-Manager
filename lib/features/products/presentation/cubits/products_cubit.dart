@@ -60,7 +60,6 @@ class ProductsCubit extends Cubit<ProductsState> {
   Future<void> deleteProduct(int productId) async {
     try {
       final clientResponse = await productsRepo.deleteProduct(productId);
-
       if (clientResponse != null) {
         emit(ProductDeleted(clientResponse));
         await readProducts();
@@ -68,10 +67,6 @@ class ProductsCubit extends Cubit<ProductsState> {
     } catch (e) {
       emit(ProductsError("Error al eliminar producto: $e"));
     }
-  }
-
-  void test() {
-    emit(ProductsEmpty());
   }
 
   Future<bool> productCodeExists(String code) async =>
