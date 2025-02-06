@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:store_manager/features/auth/presentation/cubits/auth_cubit.dart';
+import 'package:store_manager/utilities/toast.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? togglePages;
@@ -27,17 +28,23 @@ class _RegisterPageState extends State<RegisterPage> {
     final String confirmPassword = confirmPasswordController.text;
     final bool validPassword = password == confirmPassword;
 
-    if (name.isNotEmpty &&
-        email.isNotEmpty &&
-        password.isNotEmpty &&
-        confirmPassword.isNotEmpty &&
-        validPassword) {
-      // Implement password validation errors
-      final authCubit = context.read<AuthCubit>();
-      authCubit.register(name, email, password);
-    } else {
-      // Implement input erros
+    if (name.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty ||
+        confirmPassword.isEmpty) {
+      Toast.warningToast(
+          "Campos incompletos", "Por favor llenar todos los campos.");
+      return;
     }
+
+    if (!validPassword) {
+      Toast.warningToast(
+          "Contraseñas no validas", "Las contraseñas no son iguales.");
+      return;
+    }
+
+    final authCubit = context.read<AuthCubit>();
+    authCubit.register(name, email, password);
   }
 
   @override

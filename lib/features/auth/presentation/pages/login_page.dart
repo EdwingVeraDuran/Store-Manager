@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:store_manager/features/auth/presentation/cubits/auth_cubit.dart';
+import 'package:store_manager/utilities/toast.dart';
 
 class LoginPage extends StatefulWidget {
   final void Function()? togglePages;
@@ -22,13 +23,12 @@ class _LoginPageState extends State<LoginPage> {
     final String email = emailController.text;
     final String password = passwordController.text;
 
-    final authCubit = context.read<AuthCubit>();
-
-    if (email.isNotEmpty && password.isNotEmpty) {
-      authCubit.login(email, password);
-    } else {
-      //Implement input errors
+    if (email.isEmpty || password.isEmpty) {
+      Toast.warningToast(
+          "Campos incompletos", "Por favor llene todos los campos.");
     }
+
+    context.read<AuthCubit>().login(email, password);
   }
 
   @override
