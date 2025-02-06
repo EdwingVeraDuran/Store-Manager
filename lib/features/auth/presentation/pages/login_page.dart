@@ -67,6 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                       ? HugeIcons.strokeRoundedView
                       : HugeIcons.strokeRoundedViewOffSlash,
                   onTapSuffix: () => setState(() => isObscure = !isObscure),
+                  onFieldSubmitted: (p0) => login(),
                 ),
                 const SizedBox(height: 24),
                 ElevarmPrimaryButton.text(

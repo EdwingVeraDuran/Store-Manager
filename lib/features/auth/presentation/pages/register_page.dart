@@ -74,6 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ? HugeIcons.strokeRoundedView
                       : HugeIcons.strokeRoundedViewOffSlash,
                   onTapSuffix: () => setState(() => isObscure = !isObscure),
+                  onFieldSubmitted: (p0) => register(),
                 ),
                 const SizedBox(height: 12),
                 ElevarmTextInputField(
