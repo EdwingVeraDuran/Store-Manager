@@ -24,7 +24,7 @@ migrate_working_dir/
 #.vscode/
 
 # Supabase related
-lib/utilities/supabase_service.dart
+lib/services/supabase_service.dart
 
 # Flutter/Dart/Pub related
 **/doc/api/
