@@ -1,10 +1,10 @@
-import 'package:data_table_2/data_table_2.dart';
 import 'package:elevarm_ui/elevarm_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_manager/features/app_layout/presentation/widgets/layout_header.dart';
 import 'package:store_manager/features/app_layout/presentation/widgets/layout_table.dart';
 import 'package:store_manager/features/app_layout/presentation/widgets/table_widgets.dart';
+import 'package:store_manager/features/clients/domain/constants/clients_costants.dart';
 import 'package:store_manager/features/clients/domain/entities/client.dart';
 import 'package:store_manager/features/clients/presentation/cubits/clients_cubit.dart';
 import 'package:store_manager/features/clients/presentation/cubits/clients_state.dart';
@@ -28,6 +28,12 @@ class _ClientsPageState extends State<ClientsPage> {
   void initState() {
     super.initState();
     clientsCubit.readClients();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchController.dispose();
   }
 
   @override
@@ -56,7 +62,8 @@ class _ClientsPageState extends State<ClientsPage> {
         } else if (state is ClientsEmpty) {
           content = Center(child: Text("No existen clientes."));
         } else if (state is ClientsList) {
-          content = LayoutTable(columns: columns(), data: data(state.clients));
+          content = LayoutTable(
+              columns: ClientsCostants.columns, data: data(state.clients));
         }
 
         return Padding(
@@ -79,19 +86,8 @@ class _ClientsPageState extends State<ClientsPage> {
     );
   }
 
-  List<DataColumn2> columns() {
-    return [
-      TableWidgets.tableColumn("Telefono"),
-      TableWidgets.tableColumn("Nombre"),
-      TableWidgets.tableColumn("Dirección", isLarge: true),
-      TableWidgets.tableColumn("Barrio"),
-      TableWidgets.tableColumn("Acciones"),
-    ];
-  }
-
-  List<DataRow> data(List<Client> clients) {
-    return clients.map((e) => row(e)).toList();
-  }
+  List<DataRow> data(List<Client> clients) =>
+      clients.map((e) => row(e)).toList();
 
   DataRow row(Client client) {
     return DataRow(

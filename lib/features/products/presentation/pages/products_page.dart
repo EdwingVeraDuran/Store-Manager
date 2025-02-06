@@ -1,10 +1,10 @@
-import 'package:data_table_2/data_table_2.dart';
 import 'package:elevarm_ui/elevarm_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_manager/features/app_layout/presentation/widgets/layout_header.dart';
 import 'package:store_manager/features/app_layout/presentation/widgets/layout_table.dart';
 import 'package:store_manager/features/app_layout/presentation/widgets/table_widgets.dart';
+import 'package:store_manager/features/products/domain/constants/products_constants.dart';
 import 'package:store_manager/features/products/domain/entities/product.dart';
 import 'package:store_manager/features/products/presentation/cubits/products_cubit.dart';
 import 'package:store_manager/features/products/presentation/cubits/products_state.dart';
@@ -29,6 +29,12 @@ class _ProductsPageState extends State<ProductsPage> {
   void initState() {
     super.initState();
     productsCubit.readProducts();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchController.dispose();
   }
 
   @override
@@ -57,7 +63,8 @@ class _ProductsPageState extends State<ProductsPage> {
         } else if (state is ProductsEmpty) {
           content = Center(child: Text("No existen productos."));
         } else if (state is ProductsList) {
-          content = LayoutTable(columns: columns(), data: data(state.products));
+          content = LayoutTable(
+              columns: ProductsConstants.columns, data: data(state.products));
         }
 
         return Padding(
@@ -83,20 +90,8 @@ class _ProductsPageState extends State<ProductsPage> {
     );
   }
 
-  List<DataColumn2> columns() {
-    return [
-      TableWidgets.tableColumn("Código"),
-      TableWidgets.tableColumn("Nombre", isLarge: true),
-      TableWidgets.tableColumn("\$ Compra"),
-      TableWidgets.tableColumn("\$ Venta"),
-      TableWidgets.tableColumn("Unidades"),
-      TableWidgets.tableColumn("Acciones"),
-    ];
-  }
-
-  List<DataRow> data(List<Product> products) {
-    return products.map((e) => row(e)).toList();
-  }
+  List<DataRow> data(List<Product> products) =>
+      products.map((e) => row(e)).toList();
 
   DataRow row(Product product) {
     return DataRow(
