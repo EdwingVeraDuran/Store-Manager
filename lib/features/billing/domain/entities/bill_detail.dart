@@ -2,7 +2,7 @@ class BillDetail {
   final int? id;
   final int billId;
   final int productId;
-  final int amount;
+  int amount;
   final int price;
 
   BillDetail(

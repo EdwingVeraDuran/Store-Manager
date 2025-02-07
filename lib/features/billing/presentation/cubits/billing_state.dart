@@ -1,10 +1,11 @@
 import 'package:store_manager/features/billing/domain/entities/bill.dart';
+import 'package:store_manager/features/billing/domain/entities/bill_info.dart';
 
 abstract class BillingState {}
 
 class BillingInitial extends BillingState {}
 
-class BillingsLoading extends BillingState {}
+class BillsLoading extends BillingState {}
 
 class BillCreated extends BillingState {
   final Bill bill;
@@ -19,6 +20,12 @@ class BillUpdated extends BillingState {
 class BillDeleted extends BillingState {
   final Bill bill;
   BillDeleted(this.bill);
+}
+
+class BillDetails extends BillingState {
+  final BillInfo billInfo;
+
+  BillDetails(this.billInfo);
 }
 
 class BillsList extends BillingState {

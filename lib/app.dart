@@ -5,6 +5,8 @@ import 'package:store_manager/features/auth/presentation/cubits/auth_cubit.dart'
 import 'package:store_manager/features/auth/presentation/cubits/auth_states.dart';
 import 'package:store_manager/features/auth/presentation/pages/auth_page.dart';
 import 'package:store_manager/features/app_layout/presentation/pages/app_layout.dart';
+import 'package:store_manager/features/billing/data/supabase_billing_repo.dart';
+import 'package:store_manager/features/billing/presentation/cubits/billing_cubit.dart';
 import 'package:store_manager/features/clients/data/supabase_clients_repo.dart';
 import 'package:store_manager/features/clients/presentation/cubits/clients_cubit.dart';
 import 'package:store_manager/features/products/data/supabase_products_repo.dart';
@@ -16,6 +18,7 @@ class MainApp extends StatelessWidget {
   final authRepo = SupabaseAuthRepo();
   final productsRepo = SupabaseProductsRepo();
   final clientsRepo = SupabaseClientsRepo();
+  final billingRepo = SupabaseBillingRepo();
 
   MainApp({super.key});
 
@@ -29,6 +32,8 @@ class MainApp extends StatelessWidget {
             create: (context) => ProductsCubit(productsRepo: productsRepo)),
         BlocProvider(
             create: (context) => ClientsCubit(clientsRepo: clientsRepo)),
+        BlocProvider(
+            create: (context) => BillingCubit(billingRepo: billingRepo)),
       ],
       child: ToastificationWrapper(
         child: MaterialApp(

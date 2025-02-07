@@ -1,5 +1,7 @@
 import 'package:store_manager/features/billing/domain/entities/bill.dart';
 import 'package:store_manager/features/billing/domain/entities/bill_detail.dart';
+import 'package:store_manager/features/billing/domain/entities/bill_info.dart';
+import 'package:store_manager/features/billing/domain/entities/cart_item.dart';
 import 'package:store_manager/features/billing/domain/repos/billing_repo.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -8,10 +10,17 @@ class SupabaseBillingRepo implements BillingRepo {
   final billDetailsTable = Supabase.instance.client.from("bill_details");
 
   @override
-  Future<Bill?> createBill(Bill bill, List<BillDetail> billDetails) async {
+  Future<Bill?> createBill(Bill bill, List<CartItem> items) async {
     try {
       final clientResponse = await billsTable.insert(bill.toMap()).select();
-      await billDetailsTable.insert(billDetails.map((e) => e.toMap()).toList());
+      final billResponse = Bill.fromMap(clientResponse.first);
+      await billDetailsTable.insert(items
+          .map((item) => BillDetail(
+              billId: billResponse.id!,
+              productId: item.product.id!,
+              amount: item.amount,
+              price: item.product.sellPrice))
+          .toList());
       final response = Bill.fromMap(clientResponse.first);
       return response;
     } catch (e) {
@@ -57,13 +66,13 @@ class SupabaseBillingRepo implements BillingRepo {
   }
 
   @override
-  Future<Bill?> updateBill(Bill bill, List<BillDetail> billDetails) async {
+  Future<Bill?> updateBill(BillInfo billInfo) async {
     try {
       final clientResponse = await billsTable
-          .update(bill.toMap())
-          .eq("bill_id", bill.id!)
+          .update(billInfo.bill.toMap())
+          .eq("bill_id", billInfo.bill.id!)
           .select();
-      billDetails.map((e) async =>
+      billInfo.billDetails.map((e) async =>
           await billDetailsTable.update(e.toMap()).eq("id", e.id!));
       final response = Bill.fromMap(clientResponse.first);
       return response;
