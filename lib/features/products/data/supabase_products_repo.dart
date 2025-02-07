@@ -44,6 +44,17 @@ class SupabaseProductsRepo implements ProductsRepo {
   }
 
   @override
+  Future<Product?> getProductByCode(String code) async {
+    try {
+      final clientResponse = await productsTable.select().eq("code", code);
+      final productResponse = Product.fromMap(clientResponse.first);
+      return productResponse;
+    } catch (e) {
+      throw Exception("Product selection by code failed: $e");
+    }
+  }
+
+  @override
   Future<Product?> updateProduct(Product product) async {
     try {
       final clientResponse = await productsTable
