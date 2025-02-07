@@ -44,6 +44,19 @@ class ProductsCubit extends Cubit<ProductsState> {
     }
   }
 
+  Future<Product?> getProductByCode(String code) async {
+    try {
+      final product = await productsRepo.getProductByCode(code);
+
+      if (product != null) {
+        return product;
+      }
+    } catch (e) {
+      emit(ProductsError("Error al leer producto."));
+    }
+    return null;
+  }
+
   Future<void> updateProduct(Product product) async {
     try {
       final productResponse = await productsRepo.updateProduct(product);
