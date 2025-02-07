@@ -2,6 +2,7 @@ import 'package:elevarm_ui/elevarm_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:store_manager/features/app_layout/presentation/widgets/base_dialog.dart';
 import 'package:store_manager/features/products/domain/entities/product.dart';
 import 'package:store_manager/features/products/presentation/cubits/products_cubit.dart';
 import 'package:store_manager/utilities/toast.dart';
@@ -87,85 +88,50 @@ class _CreateProductDialogState extends State<CreateProductDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.transparent,
-      child: SizedBox(
-        width: 380,
-        height: 480,
-        child: ElevarmElevatedCard(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Crear Producto",
-                    style: TextStyle(
-                      fontSize: ElevarmFontSizes.xl,
-                      fontWeight: ElevarmFontWeights.bold,
-                    ),
-                  ),
-                  ElevarmTertiaryNeutralButton.iconOnly(
-                    iconAssetName: HugeIcons.strokeRoundedCancel01,
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevarmTextInputField(
-                      hintText: "Código",
-                      prefixText: "#",
-                      suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
-                      controller: codeController,
-                      onTapSuffix: () => codeController.clear(),
-                    ),
-                    ElevarmTextInputField(
-                      hintText: "Nombre",
-                      suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
-                      controller: nameController,
-                      onTapSuffix: () => nameController.clear(),
-                    ),
-                    ElevarmTextInputField(
-                      hintText: "Precio compra",
-                      prefixText: "\$",
-                      suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
-                      controller: buyPriceController,
-                      onTapSuffix: () => buyPriceController.clear(),
-                    ),
-                    ElevarmTextInputField(
-                      hintText: "Precio venta",
-                      prefixText: "\$",
-                      suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
-                      controller: sellPriceController,
-                      onTapSuffix: () => sellPriceController.clear(),
-                    ),
-                    ElevarmTextInputField(
-                      hintText: "Unidades",
-                      suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
-                      controller: stockController,
-                      onTapSuffix: () => stockController.clear(),
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevarmPrimaryButton.text(
-                    text: "Crear",
-                    onPressed: create,
-                  ),
-                ],
-              ),
-            ],
+    return BaseDialog(
+      title: "Crear producto",
+      buttonText: "Crear",
+      width: 380,
+      height: 480,
+      onPressed: create,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevarmTextInputField(
+            hintText: "Código",
+            prefixText: "#",
+            suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
+            controller: codeController,
+            onTapSuffix: () => codeController.clear(),
           ),
-        ),
+          ElevarmTextInputField(
+            hintText: "Nombre",
+            suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
+            controller: nameController,
+            onTapSuffix: () => nameController.clear(),
+          ),
+          ElevarmTextInputField(
+            hintText: "Precio compra",
+            prefixText: "\$",
+            suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
+            controller: buyPriceController,
+            onTapSuffix: () => buyPriceController.clear(),
+          ),
+          ElevarmTextInputField(
+            hintText: "Precio venta",
+            prefixText: "\$",
+            suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
+            controller: sellPriceController,
+            onTapSuffix: () => sellPriceController.clear(),
+          ),
+          ElevarmTextInputField(
+            hintText: "Unidades",
+            suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
+            controller: stockController,
+            onTapSuffix: () => stockController.clear(),
+          ),
+        ],
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:elevarm_ui/elevarm_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:store_manager/features/app_layout/presentation/widgets/base_dialog.dart';
 import 'package:store_manager/features/clients/domain/entities/client.dart';
 import 'package:store_manager/features/clients/presentation/cubits/clients_cubit.dart';
 import 'package:store_manager/utilities/toast.dart';
@@ -77,77 +78,42 @@ class _CreateClientDialogState extends State<CreateClientDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.transparent,
-      child: SizedBox(
-        width: 380,
-        height: 480,
-        child: ElevarmElevatedCard(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Crear Cliente",
-                    style: TextStyle(
-                      fontSize: ElevarmFontSizes.xl,
-                      fontWeight: ElevarmFontWeights.bold,
-                    ),
-                  ),
-                  ElevarmTertiaryNeutralButton.iconOnly(
-                    iconAssetName: HugeIcons.strokeRoundedCancel01,
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevarmTextInputField(
-                      hintText: "Teléfono",
-                      prefixText: "+57",
-                      suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
-                      controller: phoneController,
-                      onTapSuffix: () => phoneController.clear(),
-                    ),
-                    ElevarmTextInputField(
-                      hintText: "Nombre",
-                      suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
-                      controller: nameController,
-                      onTapSuffix: () => nameController.clear(),
-                    ),
-                    ElevarmTextInputField(
-                      hintText: "Dirección",
-                      suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
-                      controller: addressController,
-                      onTapSuffix: () => addressController.clear(),
-                    ),
-                    ElevarmTextInputField(
-                      hintText: "Barrio",
-                      suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
-                      controller: hoodController,
-                      onTapSuffix: () => hoodController.clear(),
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevarmPrimaryButton.text(
-                    text: "Crear",
-                    onPressed: create,
-                  ),
-                ],
-              ),
-            ],
+    return BaseDialog(
+      title: "Crear Cliente",
+      buttonText: "Crear",
+      width: 380,
+      height: 480,
+      onPressed: create,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevarmTextInputField(
+            hintText: "Teléfono",
+            prefixText: "+57",
+            suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
+            controller: phoneController,
+            onTapSuffix: () => phoneController.clear(),
           ),
-        ),
+          ElevarmTextInputField(
+            hintText: "Nombre",
+            suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
+            controller: nameController,
+            onTapSuffix: () => nameController.clear(),
+          ),
+          ElevarmTextInputField(
+            hintText: "Dirección",
+            suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
+            controller: addressController,
+            onTapSuffix: () => addressController.clear(),
+          ),
+          ElevarmTextInputField(
+            hintText: "Barrio",
+            suffixIconAssetName: HugeIcons.strokeRoundedCancel01,
+            controller: hoodController,
+            onTapSuffix: () => hoodController.clear(),
+          ),
+        ],
       ),
     );
   }
