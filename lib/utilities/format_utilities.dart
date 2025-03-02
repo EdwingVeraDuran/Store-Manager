@@ -6,5 +6,5 @@ class FormatUtilities {
           .format(price);
 
   static String formattedDate(DateTime date) =>
-      DateFormat('dd/MM/yyyy').format(date);
+      DateFormat('dd/MM/yyyy - HH:mm').format(date);
 }

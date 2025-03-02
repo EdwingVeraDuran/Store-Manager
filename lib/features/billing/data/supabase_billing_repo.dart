@@ -21,17 +21,17 @@ class SupabaseBillingRepo implements BillingRepo {
               amount: item.amount,
               price: item.product.sellPrice))
           .toList());
-      final response = Bill.fromMap(clientResponse.first);
-      return response;
+      return billResponse;
     } catch (e) {
-      throw Exception("Bill creation failed: $e");
+      throw ("Bill creation failed: $e");
     }
   }
 
   @override
   Future<List<Bill>> readBills() async {
     try {
-      final clientResponse = await billsTable.select();
+      final clientResponse =
+          await billsTable.select().order("date", ascending: false);
       final response = clientResponse.map((e) => Bill.fromMap(e)).toList();
       return response;
     } catch (e) {
@@ -57,7 +57,8 @@ class SupabaseBillingRepo implements BillingRepo {
     try {
       final clientResponse = await billsTable
           .select()
-          .or("client_phone.ilike.%$query%,id.ilike.%$query%");
+          .or('client_phone.ilike.%$query%, id.eq.$query')
+          .order('date', ascending: false);
       final response = clientResponse.map((e) => Bill.fromMap(e)).toList();
       return response;
     } catch (e) {

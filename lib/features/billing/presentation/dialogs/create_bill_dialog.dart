@@ -26,12 +26,9 @@ class _CreateBillDialogState extends State<CreateBillDialog> {
   final int total = 0;
   final List<CartItem> items = [];
 
-  late DateTime date;
-
   @override
   void initState() {
     super.initState();
-    date = DateTime.now();
     context.read<ClientsCubit>().readClients();
   }
 
@@ -79,8 +76,9 @@ class _CreateBillDialogState extends State<CreateBillDialog> {
     }
 
     Navigator.of(context).pop();
-    context.read<BillingCubit>().createBill(
-        Bill(date: date, clientPhone: clientPhone, total: total), items);
+    context
+        .read<BillingCubit>()
+        .createBill(Bill(clientPhone: clientPhone, total: calcTotal()), items);
   }
 
   @override
@@ -94,13 +92,6 @@ class _CreateBillDialogState extends State<CreateBillDialog> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 8),
-          Text(
-            FormatUtilities.formattedDate(date),
-            style: TextStyle(
-              fontSize: ElevarmFontSizes.lg,
-            ),
-          ),
           SizedBox(height: 16),
           Row(
             children: [

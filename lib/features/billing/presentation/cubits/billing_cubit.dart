@@ -49,6 +49,7 @@ class BillingCubit extends Cubit<BillingState> {
   }
 
   Future<void> searchBills(String query) async {
+    if (query.isEmpty) readBills();
     try {
       emit(BillsLoading());
 

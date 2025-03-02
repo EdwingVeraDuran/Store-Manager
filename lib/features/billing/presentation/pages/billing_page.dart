@@ -78,7 +78,8 @@ class _BillingPageState extends State<BillingPage> {
     return DataRow(
       cells: [
         TableWidgets.tableCell(bill.id.toString()),
-        TableWidgets.tableCell(FormatUtilities.formattedDate(bill.date)),
+        TableWidgets.tableCell(
+            FormatUtilities.formattedDate(bill.date ?? DateTime.now())),
         TableWidgets.tableCell(bill.clientPhone),
         TableWidgets.tableCell(FormatUtilities.formattedPrice(bill.total)),
         TableWidgets.tableActionsCell(
